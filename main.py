@@ -1,25 +1,23 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
+import random
 
 app = Flask(__name__)
 
-recipes = [
-    {"id": 1, "name": "Nasi Goreng", "ingredients": ["Nasi", "Telur", "Kecap", "Bawang"]},
-    {"id": 2, "name": "Mie Goreng", "ingredients": ["Mie", "Sayur", "Kecap", "Bawang"]},
-    {"id": 3, "name": "Ayam Bakar", "ingredients": ["Ayam", "Kecap", "Bumbu Bakar"]}
+quotes = [
+    {"author": "Albert Einstein", "quote": "Life is like riding a bicycle. To keep your balance you must keep moving."},
+    {"author": "Steve Jobs", "quote": "Stay hungry, stay foolish."},
+    {"author": "Nelson Mandela", "quote": "The greatest glory in living lies not in never falling, but in rising every time we fall."},
+    {"author": "Confucius", "quote": "It does not matter how slowly you go as long as you do not stop."},
+    {"author": "Oprah Winfrey", "quote": "Turn your wounds into wisdom."}
 ]
 
-@app.route('/', methods=['GET'])
-def home():
-    data = {
-        "name": "John Doe",
-        "address": "Jl. Merdeka No. 123, Jakarta"
-    }
-    return jsonify(data)
+@app.route('/api/quote', methods=['GET'])
+def get_quote():
+    return jsonify(random.choice(quotes))
 
-@app.route('/api/recipes', methods=['GET'])
-def get_recipes():
-    return jsonify({"recipes": recipes})
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
