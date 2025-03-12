@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe API Sample</title>
+    <title>Kutipan Motivasi</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Recipe List</h1>
-    <button onclick="fetchRecipes()">Load Recipes</button>
-    <ul id="recipe-list"></ul>
+    <div class="container">
+        <h1>Kutipan Motivasi</h1>
+        <p id="quote">Klik tombol di bawah untuk mendapatkan kutipan!</p>
+        <p id="author"></p>
+        <button onclick="fetchQuote()">Dapatkan Kutipan</button>
+    </div>
 
     <script>
-        function fetchRecipes() {
-            fetch('http://127.0.0.1:5000/api/recipes')
-                .then(response => response.json())
-                .then(data => {
-                    const list = document.getElementById('recipe-list');
-                    list.innerHTML = '';
-                    data.recipes.forEach(recipe => {
-                        const li = document.createElement('li');
-                        li.textContent = `${recipe.name}: ${recipe.ingredients.join(', ')}`;
-                        list.appendChild(li);
-                    });
-                })
-                .catch(error => console.error('Error fetching recipes:', error));
+        async function fetchQuote() {
+            const response = await fetch('/api/quote');
+            const data = await response.json();
+            document.getElementById('quote').innerText = `"${data.quote}"`;
+            document.getElementById('author').innerText = `- ${data.author}`;
         }
     </script>
 </body>
