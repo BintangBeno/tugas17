@@ -8,9 +8,18 @@ recipes = [
     {"id": 3, "name": "Ayam Bakar", "ingredients": ["Ayam", "Kecap", "Bumbu Bakar"]}
 ]
 
+@app.route('/', methods=['GET'])
+def home():
+    data = {
+        "name": "John Doe",
+        "address": "Jl. Merdeka No. 123, Jakarta"
+    }
+    return jsonify(data)
+
 @app.route('/api/recipes', methods=['GET'])
 def get_recipes():
     return jsonify({"recipes": recipes})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
